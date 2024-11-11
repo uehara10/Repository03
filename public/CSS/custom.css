@@ -1,0 +1,15 @@
+/* public/css/custom.css */
+
+/* 必須項目のアスタリスクスタイル */
+.required-marker {
+  color: red;
+}
+
+/* 画像表示の最大幅スタイル */
+.product-image {
+  max-width: 100px;
+}
+
+.product-image-large {
+  max-width: 300px;
+}
