@@ -45,8 +45,6 @@
         <th>在庫</th>
         <th>コメント</th>
         <th>画像</th>
-        <th>作成日</th>
-        <th>更新日</th>
         <th>詳細</th>
         <th>削除</th>
       </tr>
@@ -67,9 +65,6 @@
           <p>画像なし</p>
           @endif
         </td>
-
-        <td>{{ $product->created_at }}</td>
-        <td>{{ $product->updated_at }}</td>
 
         <td>
           <a href="{{ route('products.show', $product->id) }}" class="btn btn-info">詳細</a>

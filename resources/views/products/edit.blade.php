@@ -8,6 +8,11 @@
     @method('PUT')
 
     <div class="form-group">
+      <label for="product_id">商品ID:</label>
+      <input type="text" class="form-control" id="product_id" value="{{ $product->id }}" disabled>
+    </div>
+
+    <div class="form-group">
       <label for="product_name">商品名 <span class="required-marker">*</span></label>
       <input type="text" name="product_name" class="form-control" value="{{ old('product_name', $product->product_name) }}" required>
     </div>

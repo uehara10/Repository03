@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,23 +41,14 @@ class ProductController extends Controller
         return view('products.create', compact('companies'));
     }
 
-
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $request->validate([
-            'company_id' => 'required|integer',
-            'product_name' => 'required|string',
-            'price' => 'required|numeric|min:1',
-            'stock' => 'required|integer|min:0',
-            'comment' => 'nullable|string',
-            'img_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
         try {
             $imagePath = null;
             if ($request->hasFile('img_path')) {
                 $imagePath = $request->file('img_path')->store('images', 'public');
             }
+
             Product::create([
                 'company_id' => $request->company_id,
                 'product_name' => $request->product_name,
@@ -80,18 +72,8 @@ class ProductController extends Controller
         return view('products.edit', compact('product', 'companies'));
     }
 
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        // バリデーション
-        $request->validate([
-            'company_id' => 'required|integer',
-            'product_name' => 'required|string',
-            'price' => 'required|numeric|min:1',
-            'stock' => 'required|integer|min:0',
-            'comment' => 'nullable|string',
-            'img_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
         try {
             $product = Product::findOrFail($id);
 
@@ -122,6 +104,11 @@ class ProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
+
+            if ($product->img_path) {
+                Storage::delete('public/' . $product->img_path);
+            }
+
             $product->delete();
             return redirect()->route('products.index')->with('success', '商品を削除しました');
         } catch (\Exception $e) {

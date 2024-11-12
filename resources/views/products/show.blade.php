@@ -5,7 +5,8 @@
   <h1>商品詳細</h1>
   <div class="card">
     <div class="card-body">
-      <h5>商品名: {{ $product->product_name }}</h5>
+      <p><strong>ID:</strong> {{ $product->id }}</p>
+      <p>商品名: {{ $product->product_name }}</p>
       <p>企業名: {{ $product->company->company_name ?? '未登録' }}</p>
       <p>価格: ¥{{ $product->price }}</p>
       <p>在庫数: {{ $product->stock }}</p>
